@@ -1,0 +1,21 @@
+https://app.pluralsight.com/library/courses/rxjs-angular-reactive-development/table-of-contents
+https://github.com/DeborahK/Angular-RxJS
+https://github.com/Annie-Huang/Angular-RxJS
+
+https://stackblitz.com/
+
+
+======================================================
+
+RxJS: Reactive Extensions for JavaScript
+
+
+C:\react>ng new Angular-RxJS
+? Would you like to add Angular routing? (y/N) y
+? Which stylesheet format would you like to use?
+> CSS
+  SCSS   [ https://sass-lang.com/documentation/syntax#scss                ]
+  Sass   [ https://sass-lang.com/documentation/syntax#the-indented-syntax ]
+  Less   [ http://lesscss.org                                             ]
+  Stylus [ http://stylus-lang.com                                         ]
+
