@@ -3,7 +3,8 @@ https://github.com/DeborahK/Angular-RxJS
 https://github.com/Annie-Huang/Angular-RxJS
 
 https://stackblitz.com/
-
+https://rxjs.dev/api
+https://rxjs.dev/operator-decision-tree
 
 ======================================================
 
