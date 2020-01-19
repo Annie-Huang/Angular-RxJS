@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {from, of} from 'rxjs';
-import {log} from 'util';
 
 @Component({
   selector: 'app-root',
