@@ -12,7 +12,10 @@ import { SupplierService } from '../suppliers/supplier.service';
   providedIn: 'root'
 })
 export class ProductService {
-  private productsUrl = 'api/products';
+  // Use the error url to test the catchError in product-list.component.ts
+  private productsUrl = 'api/product'; // error one
+  // private productsUrl = 'api/products';
+
   private suppliersUrl = this.supplierService.suppliersUrl;
 
   constructor(private http: HttpClient,
