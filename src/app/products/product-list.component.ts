@@ -1,14 +1,15 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
-import {EMPTY, Observable, of, Subscription} from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 
 import { Product } from './product';
 import { ProductService } from './product.service';
-import {catchError, tap} from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.css']
+  styleUrls: ['./product-list.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductListComponent implements OnInit {
   pageTitle = 'Product List';
@@ -28,6 +29,11 @@ export class ProductListComponent implements OnInit {
     //     products => this.products = products,
     //     error => this.errorMessage = error
     //   );
+
+    // Do it this way so we can keep the async pipe in the product-list.component.html
+    // 1. So we don't need to subscribe (ngOnInit) and unsubscribe (onDestory)
+    // 2. Also improve change detection (can switch changeDetection to 'OnPush'
+    // Module04 Going Reactive - Note26 - Change Detection Strategies and why anyc pipe on observable can improve change detection cycle.jpg
     this.products$ = this.productService.getProducts()
       .pipe(
         catchError(err => {
