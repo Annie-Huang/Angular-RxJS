@@ -6,6 +6,10 @@ https://stackblitz.com/
 https://rxjs.dev/api
 https://rxjs.dev/operator-decision-tree
 
+In C:\react\Angular-RxJS\CodeBackupToLecture3RxJSOperator\
+the only change that is different from angular cli generated project is:
+C:\react\Angular-RxJS\src\app\app.component.ts
+
 ======================================================
 
 RxJS: Reactive Extensions for JavaScript
