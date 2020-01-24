@@ -24,3 +24,5 @@ C:\react>ng new Angular-RxJS
   Less   [ http://lesscss.org                                             ]
   Stylus [ http://stylus-lang.com                                         ]
 
+
+C:\react\Angular-RxJS>npm install bootstrap
