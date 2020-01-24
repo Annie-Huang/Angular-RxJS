@@ -26,3 +26,4 @@ C:\react>ng new Angular-RxJS
 
 
 C:\react\Angular-RxJS>npm install bootstrap
+C:\react\Angular-RxJS>npm install core-js
