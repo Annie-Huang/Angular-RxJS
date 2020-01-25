@@ -5,6 +5,7 @@ import { EMPTY, Observable } from 'rxjs';
 import { Product } from './product';
 import { ProductService } from './product.service';
 import {catchError, map} from 'rxjs/operators';
+import {ProductCategoryService} from '../product-categories/product-category.service';
 
 @Component({
   templateUrl: './product-list.component.html',
@@ -14,7 +15,7 @@ import {catchError, map} from 'rxjs/operators';
 export class ProductListComponent {
   pageTitle = 'Product List';
   errorMessage = '';
-  categories;
+  // categories;
   selectedCategoryId = 1;
 
   // products: Product[] = [];
@@ -32,6 +33,14 @@ export class ProductListComponent {
       })
     );
 
+  categories$ = this.productCategoryService.productCategories$
+    .pipe(
+      catchError(err => {
+        this.errorMessage = err;
+        return EMPTY;
+      })
+    );
+
   productSimpleFilter$ = this.productService.productWithCategory$
     .pipe(
       map(products =>
@@ -42,8 +51,8 @@ export class ProductListComponent {
     );
 
 
-
-  constructor(private productService: ProductService) { }
+  // constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService, private productCategoryService: ProductCategoryService) { }
 
   // ngOnInit(): void {
   //   // this.sub = this.productService.getProducts()
