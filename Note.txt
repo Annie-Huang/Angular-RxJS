@@ -7,7 +7,12 @@ https://rxjs.dev/api
 https://rxjs.dev/operator-decision-tree
 https://rxjs-dev.firebaseapp.com/api/index/function/empty
 https://www.learnrxjs.io/learn-rxjs/operators/creation/empty
-
+https://rxjs-dev.firebaseapp.com/api/index/function/combineLatest
+https://www.learnrxjs.io/learn-rxjs/operators/combination/combinelatest
+https://rxjs-dev.firebaseapp.com/api/index/function/forkJoin
+https://www.learnrxjs.io/learn-rxjs/operators/combination/forkjoin
+https://rxjs-dev.firebaseapp.com/api/operators/withLatestFrom
+https://www.learnrxjs.io/learn-rxjs/operators/combination/withlatestfrom
 
 In C:\react\Angular-RxJS\CodeBackupToLecture3RxJSOperator\
 the only change that is different from angular cli generated project is:
@@ -31,5 +36,44 @@ C:\react>ng new Angular-RxJS
 C:\react\Angular-RxJS>npm install bootstrap
 C:\react\Angular-RxJS>npm install core-js
 C:\react\Angular-RxJS>npm install angular-in-memory-web-api --save-dev
+
+empty:
+Observable that immediately completes.
+
+combineLatest:
+When any observable emits a value, emit the last emitted value from each.
+It only start emitting when all stream stared of values. e.g. stream 1 emit at 1s, stream 2 emit at 4s, stream 3 emits at 9s.
+Then the first value to emit is at 9s.
+
+forkJoin
+When all observables complete, emit the last emitted value from each.
+
+withLatestFrom
+Combines the source Observable with other Observables to create an Observable whose values are calculated from the latest values of each, only when the source emits.
+Like combineLatest, it will only emit value when both 's' and 'c' has emitted value (Module06 Combining Streams - Note41 - Marble Diagram - withLatestFrom.jpg).
+And from then on, every time 'a' emit a value, it will find the latest of 's' and 'c' value.
+
+
+combineLatest is more popular
+Because combineLatest can use with http and action, or http and http
+Where as forkJoin usually only use in http and http.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
