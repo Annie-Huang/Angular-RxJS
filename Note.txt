@@ -63,6 +63,8 @@ Because combineLatest can use with http and action, or http and http
 Where as forkJoin usually only use in http and http.
 
 
+Use suxfix Subject to represent Subject:          categorySelectedSubject
+Use suxfix Action$ to represent Action Stream:    categorySelectedAction$
 
 
 
