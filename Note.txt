@@ -13,6 +13,9 @@ https://rxjs-dev.firebaseapp.com/api/index/function/forkJoin
 https://www.learnrxjs.io/learn-rxjs/operators/combination/forkjoin
 https://rxjs-dev.firebaseapp.com/api/operators/withLatestFrom
 https://www.learnrxjs.io/learn-rxjs/operators/combination/withlatestfrom
+https://rxjs-dev.firebaseapp.com/api/operators/filter
+https://www.learnrxjs.io/learn-rxjs/operators/filtering/filter
+
 
 In C:\react\Angular-RxJS\CodeBackupToLecture3RxJSOperator\
 the only change that is different from angular cli generated project is:
