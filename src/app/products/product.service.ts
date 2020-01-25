@@ -13,8 +13,8 @@ import { SupplierService } from '../suppliers/supplier.service';
 })
 export class ProductService {
   // Use the error url to test the catchError in product-list.component.ts
-  private productsUrl = 'api/product'; // error one
-  // private productsUrl = 'api/products';
+  // private productsUrl = 'api/product'; // error one
+  private productsUrl = 'api/products';
 
   private suppliersUrl = this.supplierService.suppliersUrl;
 
