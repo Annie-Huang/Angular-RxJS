@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
-import {combineLatest, EMPTY, Observable, Subject} from 'rxjs';
+import {BehaviorSubject, combineLatest, EMPTY, Observable, Subject} from 'rxjs';
 
 import { Product } from './product';
 import { ProductService } from './product.service';
@@ -18,7 +18,8 @@ export class ProductListComponent {
   // categories;
   // selectedCategoryId = 1;
 
-  private categorySelectedSubject = new Subject<number>();
+  // private categorySelectedSubject = new Subject<number>();
+  private categorySelectedSubject = new BehaviorSubject<number>(0);
   categorySelectedAction$ = this.categorySelectedSubject.asObservable();
 
   // products: Product[] = [];
@@ -39,11 +40,11 @@ export class ProductListComponent {
   // On initialLoad will not display the whole list as combineLastest is waiting for both stream to emit at least one value.
   products$ = combineLatest([
     this.productService.productWithCategory$,
-    // this.categorySelectedAction$
     this.categorySelectedAction$
-      .pipe(
-        startWith(0)
-      )
+    // this.categorySelectedAction$
+    //   .pipe(
+    //     startWith(0)
+    //   )
   ]).pipe(
     map(([products, selectedCategoryId]) =>
       products.filter(product =>
