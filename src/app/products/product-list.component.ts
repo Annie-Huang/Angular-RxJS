@@ -26,7 +26,7 @@ export class ProductListComponent {
       catchError(err => {
         this.errorMessage = err;
         // return of([]); // The same as below
-        return EMPTY;
+        return EMPTY; // Observable that immediately completes.
       })
     );
 
