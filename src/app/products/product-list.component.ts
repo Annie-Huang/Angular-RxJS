@@ -16,7 +16,7 @@ export class ProductListComponent {
   pageTitle = 'Product List';
   errorMessage = '';
   // categories;
-  selectedCategoryId = 1;
+  // selectedCategoryId = 1;
 
   // products: Product[] = [];
   // sub: Subscription;
@@ -41,14 +41,14 @@ export class ProductListComponent {
       })
     );
 
-  productSimpleFilter$ = this.productService.productWithCategory$
-    .pipe(
-      map(products =>
-        products.filter(product =>
-          this.selectedCategoryId ? product.categoryId === this.selectedCategoryId : true // show all if there is no selectedCategoryId
-        )
-      )
-    );
+  // productSimpleFilter$ = this.productService.productWithCategory$
+  //   .pipe(
+  //     map(products =>
+  //       products.filter(product =>
+  //         this.selectedCategoryId ? product.categoryId === this.selectedCategoryId : true // show all if there is no selectedCategoryId
+  //       )
+  //     )
+  //   );
 
 
   // constructor(private productService: ProductService) { }
@@ -86,7 +86,7 @@ export class ProductListComponent {
   onSelected(categoryId: string): void {
     // console.log('Not yet implemented');
 
-    // This + is to cast it to a number
-    this.selectedCategoryId = +categoryId;
+    // // This + is to cast it to a number
+    // this.selectedCategoryId = +categoryId;
   }
 }
