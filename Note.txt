@@ -23,7 +23,6 @@ C:\react\Angular-RxJS\src\app\app.component.ts
 
 ======================================================
 
-
 RxJS: Reactive Extensions for JavaScript
 
 
