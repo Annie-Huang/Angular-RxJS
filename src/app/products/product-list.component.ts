@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
-import { EMPTY, Observable } from 'rxjs';
+import {combineLatest, EMPTY, Observable, Subject} from 'rxjs';
 
 import { Product } from './product';
 import { ProductService } from './product.service';
@@ -18,22 +18,40 @@ export class ProductListComponent {
   // categories;
   // selectedCategoryId = 1;
 
+  private categorySelectedSubject = new Subject<number>();
+  categorySelectedAction$ = this.categorySelectedSubject.asObservable();
+
   // products: Product[] = [];
   // sub: Subscription;
 
-  // Now I look at the code, I don't 100% understand why this.products$ = this.productService.getProducts() have to be inside ngOnIit()?
-  // products$: Observable<Product[]>;
-  // products$ = this.productService.products$
-  products$ = this.productService.productWithCategory$
-    .pipe(
-      catchError(err => {
-        this.errorMessage = err;
-        // return of([]); // The same as below
-        return EMPTY; // Observable that immediately completes.
-      })
-    );
+  // // Now I look at the code, I don't 100% understand why this.products$ = this.productService.getProducts() have to be inside ngOnIit()?
+  // // products$: Observable<Product[]>;
+  // // products$ = this.productService.products$
+  // products$ = this.productService.productWithCategory$
+  //   .pipe(
+  //     catchError(err => {
+  //       this.errorMessage = err;
+  //       // return of([]); // The same as below
+  //       return EMPTY; // Observable that immediately completes.
+  //     })
+  //   );
 
-  categories$ = this.productCategoryService.productCategories$
+  products$ = combineLatest([
+    this.productService.productWithCategory$,
+    this.categorySelectedAction$
+  ]).pipe(
+    map(([products, selectedCategoryId]) =>
+      products.filter(product =>
+        selectedCategoryId ? product.categoryId === selectedCategoryId : true
+      )
+    ),
+    catchError(err => {
+      this.errorMessage = err;
+      return EMPTY;
+    })
+  );
+
+    categories$ = this.productCategoryService.productCategories$
     .pipe(
       catchError(err => {
         this.errorMessage = err;
