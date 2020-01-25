@@ -84,6 +84,9 @@ export class ProductListComponent {
   }
 
   onSelected(categoryId: string): void {
-    console.log('Not yet implemented');
+    // console.log('Not yet implemented');
+
+    // This + is to cast it to a number
+    this.selectedCategoryId = +categoryId;
   }
 }
