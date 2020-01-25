@@ -106,5 +106,7 @@ export class ProductListComponent {
 
     // // This + is to cast it to a number
     // this.selectedCategoryId = +categoryId;
+
+    this.categorySelectedSubject.next(+categoryId);
   }
 }
