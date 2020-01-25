@@ -21,7 +21,8 @@ export class ProductListComponent {
 
   // Now I look at the code, I don't 100% understand why this.products$ = this.productService.getProducts() have to be inside ngOnIit()?
   // products$: Observable<Product[]>;
-  products$ = this.productService.products$
+  // products$ = this.productService.products$
+  products$ = this.productService.productWithCategory$
     .pipe(
       catchError(err => {
         this.errorMessage = err;
