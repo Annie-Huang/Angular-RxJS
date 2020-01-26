@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import {of, throwError} from 'rxjs';
-import {concatMap, map, mergeMap, switchMap, tap} from 'rxjs/operators';
+import {catchError, concatMap, map, mergeMap, shareReplay, switchMap, tap} from 'rxjs/operators';
 import {Supplier} from './supplier';
-import {log} from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -17,19 +16,19 @@ export class SupplierService {
       map(id => this.http.get<Supplier>(`${this.suppliersUrl}/${id}`))
     );
 
-  supplierWithConcatMap$ = of(1, 5, 8)
+  suppliersWithConcatMap$ = of(1, 5, 8)
     .pipe(
       tap(id => console.log('concatMap source Observable', id)),
       concatMap(id => this.http.get<Supplier>(`${this.suppliersUrl}/${id}`))
     );
 
-  supplierWithMergeMap$ = of(1, 5, 8)
+  suppliersWithMergeMap$ = of(1, 5, 8)
     .pipe(
       tap(id => console.log('mergeMap source Observable', id)),
       mergeMap(id => this.http.get<Supplier>(`${this.suppliersUrl}/${id}`))
     );
 
-  supplierWithSwitchMap$ = of(1, 5, 8)
+  suppliersWithSwitchMap$ = of(1, 5, 8)
     .pipe(
       tap(id => console.log('switchMap source Observable', id)),
       switchMap(id => this.http.get<Supplier>(`${this.suppliersUrl}/${id}`))
@@ -37,7 +36,7 @@ export class SupplierService {
 
   // constructor(private http: HttpClient) { }
   constructor(private http: HttpClient) {
-    // this.supplierWithMap$
+    // this.suppliersWithMap$
     //   // // this will print observable because supplierWithMap$ is Observerable<Observable<Supplier>>
     //   // .subscribe(
     //   //   item => console.log('map result', item)
@@ -47,10 +46,10 @@ export class SupplierService {
     //     item => console.log('map result', item)
     //   ));
 
-    // this.supplierWithConcatMap$.subscribe(item => console.log('concatMap result', item));
-    // this.supplierWithMergeMap$.subscribe(item => console.log('mergeMap result', item));
+    // this.suppliersWithConcatMap$.subscribe(item => console.log('concatMap result', item));
+    // this.suppliersWithMergeMap$.subscribe(item => console.log('mergeMap result', item));
     // // You will only see one switchMap result. Because the last one (id:8) will cancel the previous two
-    // this.supplierWithSwitchMap$.subscribe(item => console.log('switchMap result', item));
+    // this.suppliersWithSwitchMap$.subscribe(item => console.log('switchMap result', item));
   }
 
   private handleError(err: any) {
