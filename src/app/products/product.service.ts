@@ -115,6 +115,11 @@ export class ProductService {
   //     );
   // }
 
+  addProduct(newProduct?: Product) {
+    newProduct = newProduct || this.fakeProduct();
+    this.productInsertSubject.next(newProduct);
+  }
+
   private fakeProduct() {
     return {
       id: 42,
