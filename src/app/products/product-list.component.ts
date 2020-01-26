@@ -44,7 +44,9 @@ export class ProductListComponent {
   // On initialLoad will not display the whole list as combineLastest is waiting for both stream to emit at least one value.
   // "Module08 Reacting to Actions Examples - Note57 - Error msg show for the error in product-list.component.ts Part1.jpg"
   products$ = combineLatest([
-    this.productService.productWithCategory$,
+    // this.productService.productWithCategory$,
+    // productWithAdd$ contains productWithCategory$ information
+    this.productService.productWithAdd$,
     this.categorySelectedAction$
     // this.categorySelectedAction$
     //   .pipe(
@@ -62,6 +64,7 @@ export class ProductListComponent {
       return EMPTY;
     })
   );
+
 
   // "Module08 Reacting to Actions Examples - Note57 - Error msg show for the error in product-list.component.ts Part2.jpg"
   categories$ = this.productCategoryService.productCategories$
