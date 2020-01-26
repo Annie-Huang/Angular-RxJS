@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import {of, throwError} from 'rxjs';
-import {concatMap, map, mergeMap, tap} from 'rxjs/operators';
+import {concatMap, map, mergeMap, switchMap, tap} from 'rxjs/operators';
 import {Supplier} from './supplier';
 import {log} from 'util';
 
@@ -29,6 +29,12 @@ export class SupplierService {
       mergeMap(id => this.http.get<Supplier>(`${this.suppliersUrl}/${id}`))
     );
 
+  supplierWithSwitchMap$ = of(1, 5, 8)
+    .pipe(
+      tap(id => console.log('switchMap source Observable', id)),
+      switchMap(id => this.http.get<Supplier>(`${this.suppliersUrl}/${id}`))
+    );
+
   // constructor(private http: HttpClient) { }
   constructor(private http: HttpClient) {
     // this.supplierWithMap$
@@ -43,6 +49,8 @@ export class SupplierService {
 
     this.supplierWithConcatMap$.subscribe(item => console.log('concatMap result', item));
     this.supplierWithMergeMap$.subscribe(item => console.log('mergeMap result', item));
+    // You will only see one switchMap result. Because the last one (id:8) will cancel the previous two
+    this.supplierWithSwitchMap$.subscribe(item => console.log('switchMap result', item));
   }
 
   private handleError(err: any) {
