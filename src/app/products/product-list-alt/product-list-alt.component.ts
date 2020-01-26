@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {Component, OnInit, OnDestroy, ChangeDetectionStrategy} from '@angular/core';
 
 import {EMPTY, Subscription} from 'rxjs';
 
@@ -8,7 +8,8 @@ import {catchError} from 'rxjs/operators';
 
 @Component({
   selector: 'pm-product-list',
-  templateUrl: './product-list-alt.component.html'
+  templateUrl: './product-list-alt.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 // export class ProductListAltComponent implements OnInit, OnDestroy {
 export class ProductListAltComponent {
