@@ -33,6 +33,7 @@ export class ProductListAltComponent {
   //       return EMPTY;
   //     })
   //   );
+  // "Module07 Reacting to Actions - Note55 - Error msg show for the error in product-list-alt.component.ts.jpg"
   products$ = this.productService.productWithCategory$
     .pipe(
       catchError(err => {
