@@ -17,7 +17,7 @@ export class SupplierService {
       shareReplay(1),
       catchError(this.handleError)
     );
-  
+
   supplierWithMap$ = of(1, 5, 8)
     .pipe(
       map(id => this.http.get<Supplier>(`${this.suppliersUrl}/${id}`))
