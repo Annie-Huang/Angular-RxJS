@@ -88,6 +88,11 @@ export class ProductService {
               private productCategoryService: ProductCategoryService,
               private supplierService: SupplierService) { }
 
+  selectedProductChanged(selectedProductId: number): void {
+    // Every time we receive a new change, this will cause productSelectedAction$ to change and hence selectedProduct$ changes as well.
+    this.productSelectedSubject.next(selectedProductId);
+  }
+
   // getProducts(): Observable<Product[]> {
   //   return this.http.get<Product[]>(this.productsUrl)
   //     .pipe(
