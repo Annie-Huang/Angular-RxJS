@@ -14,6 +14,7 @@ import {catchError} from 'rxjs/operators';
 // export class ProductListAltComponent implements OnInit, OnDestroy {
 export class ProductListAltComponent {
   pageTitle = 'Products';
+  // ChangeDetectionStrategy.OnPush will cause any change on errorMessage not to revaluate, because it's not an obserable.
   errorMessage = '';
   // selectedProductId;
 

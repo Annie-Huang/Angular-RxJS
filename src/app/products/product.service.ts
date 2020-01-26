@@ -88,6 +88,7 @@ export class ProductService {
               private productCategoryService: ProductCategoryService,
               private supplierService: SupplierService) { }
 
+  // Anywhere from the app we can call this method and the selectedProduct$ will reevaluate again.
   selectedProductChanged(selectedProductId: number): void {
     // Every time we receive a new change, this will cause productSelectedAction$ to change and hence selectedProduct$ changes as well.
     this.productSelectedSubject.next(selectedProductId);
