@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import {combineLatest, Observable, throwError} from 'rxjs';
+import {BehaviorSubject, combineLatest, Observable, throwError} from 'rxjs';
 import {catchError, map, tap} from 'rxjs/operators';
 
 import { Product } from './product';
@@ -57,10 +57,26 @@ export class ProductService {
     )
   );
 
-  selectedProduct$ = this.productWithCategory$
+  // Compared to categorySelectedSubject in product-list.component.ts. We defined the productSElectedSubject in service because both
+  //     product-list.component.ts (for styling) and product-detail.component.ts （for displaying product) need this information.
+  // set initial value to 0.
+  private productSelectedSubject = new BehaviorSubject<number>(0);
+  productSelectedAction$ = this.productSelectedSubject.asObservable();
+
+  // selectedProduct$ = this.productWithCategory$
+  //   .pipe(
+  //     map(products =>
+  //       products.find(product => product.id === 5)
+  //     ),
+  //     tap(product => console.log('selectedProduct', product))
+  //   );
+  selectedProduct$ = combineLatest([
+    this.productWithCategory$,
+    this.productSelectedAction$
+  ])
     .pipe(
-      map(products =>
-        products.find(product => product.id === 5)
+      map(([products, selectedProductId]) =>
+        products.find(product => product.id === selectedProductId)
       ),
       tap(product => console.log('selectedProduct', product))
     );
