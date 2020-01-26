@@ -17,11 +17,36 @@ https://rxjs-dev.firebaseapp.com/api/operators/filter
 https://www.learnrxjs.io/learn-rxjs/operators/filtering/filter
 https://rxjs-dev.firebaseapp.com/api/operators/shareReplay
 https://www.learnrxjs.io/learn-rxjs/operators/multicasting/sharereplay
+https://rxjs-dev.firebaseapp.com/api/operators/concatMap
+https://www.learnrxjs.io/learn-rxjs/operators/transformation/concatmap
 
 
 In C:\react\Angular-RxJS\CodeBackupToLecture3RxJSOperator\
 the only change that is different from angular cli generated project is:
 C:\react\Angular-RxJS\src\app\app.component.ts
+
+Keywords used:
+subscribe
+next()
+error()
+complete()
+unsubscribe
+of
+from
+-----------
+map
+tap
+take
+-----------
+
+
+concatMap
+mergeMap
+switchMap
+
+
+
+
 
 ======================================================
 
@@ -101,9 +126,10 @@ Consider:
 Any Observable emit Observable is called Higher-order Observable
 
 
-
-
-
+concatMap:
+Projects each source value to an Observable which is merged in the output Observable, in a serialized fashion waiting for each one to complete before merging the next.
+It waits for each inner Observable to complete before processing the next one.
+Concatenates their results in sequence.
 
 
 
