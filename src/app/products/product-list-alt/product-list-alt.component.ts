@@ -14,7 +14,7 @@ import {catchError} from 'rxjs/operators';
 export class ProductListAltComponent {
   pageTitle = 'Products';
   errorMessage = '';
-  selectedProductId;
+  // selectedProductId;
 
   // products: Product[] = [];
   // sub: Subscription;
@@ -27,6 +27,8 @@ export class ProductListAltComponent {
         return EMPTY;
       })
     );
+
+  selectedProduct$ = this.productService.selectedProduct$;
 
   constructor(private productService: ProductService) { }
 
