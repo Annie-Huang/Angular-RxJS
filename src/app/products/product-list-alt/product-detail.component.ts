@@ -18,6 +18,7 @@ export class ProductDetailComponent {
 
   // product;
 
+  // "Module07 Reacting to Actions - Note56 - Error msg show for the error in product-detail.component.ts.jpg"
   product$ = this.productService.selectedProduct$
     .pipe(
       catchError(err => {
