@@ -19,6 +19,8 @@ https://rxjs-dev.firebaseapp.com/api/operators/shareReplay
 https://www.learnrxjs.io/learn-rxjs/operators/multicasting/sharereplay
 https://rxjs-dev.firebaseapp.com/api/operators/concatMap
 https://www.learnrxjs.io/learn-rxjs/operators/transformation/concatmap
+https://rxjs-dev.firebaseapp.com/api/operators/mergeMap
+https://www.learnrxjs.io/learn-rxjs/operators/transformation/mergemap
 
 
 In C:\react\Angular-RxJS\CodeBackupToLecture3RxJSOperator\
@@ -26,7 +28,8 @@ the only change that is different from angular cli generated project is:
 C:\react\Angular-RxJS\src\app\app.component.ts
 
 Keywords used:
-subscribe
+-----------
+subscribe         RxJS Terms and Syntax
 next()
 error()
 complete()
@@ -34,16 +37,35 @@ unsubscribe
 of
 from
 -----------
-map
+map               RxJS Operators
 tap
 take
 -----------
-
-
-concatMap
-mergeMap
+catchError        Going Reactive
+EMPTY
+throwError
+-----------
+map               Mapping Returned Data
+-----------
+combineLatest     Combining Steams
+forkJoin
+withLatestFrom
+-----------
+filter            Reacting to Actions
+startWith
+Subject
+BehaviorSubject
+-----------
+merge             Reacting to Actions Examples
+scan
+-----------
+shareReplay       Caching Observables
+-----------
+concatMap         Higher-order Mapping Operators
+mergeMap (flatMap)
 switchMap
-
+-----------
+                  Combining All the Streams
 
 
 
@@ -132,5 +154,12 @@ It waits for each inner Observable to complete before processing the next one.
 Concatenates their results in sequence.
 
 
+mergeMap:
+Projects each source value to an Observable which is merged in the output Observable.
+It executes inner Observables in parallel.
+E.g. in our marble diagram: A1 can be return after A2.
 
+flatMap is an alias for mergeMap!
+If only one inner subscription should be active at a time, try switchMap!
+If the order of emission and subscription of inner observables is important, try concatMap!
 
