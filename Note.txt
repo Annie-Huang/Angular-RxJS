@@ -84,6 +84,18 @@ In product-list.component.ts
 
 Therefore we can add shareReplay(1) into productCategories$
 
+After you add shareReplay(1) for productWithCategory$ and selectedProduct$ for product.service.ts
+Load Product List page, then go to Home page and go back to Product List page. You can see how fast the Product list page load
+as it doesn't required to reload category and products.
+
+Cache Invalidation:
+Evaluate:
+  - Fluidity of data  >> How often does data change
+  - User's behavior   >> Does user log out when they finish the task? Or they will have it login all day long?
+Consider:
+  - Invalidating the cache on a time interval
+  - Allowing the user to control when data is refreshed     >> Meaning when the data is invalidating and refresh after a time interval, if user is doing something at the time, ask user's permission first.
+  - Always getting fresh data on update operations.
 -----------------
 
 
