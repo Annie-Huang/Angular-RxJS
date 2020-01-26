@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import {BehaviorSubject, combineLatest, merge, Observable, Subject, throwError} from 'rxjs';
-import {catchError, map, scan, tap} from 'rxjs/operators';
+import {catchError, map, scan, shareReplay, tap} from 'rxjs/operators';
 
 import { Product } from './product';
 import { Supplier } from '../suppliers/supplier';
@@ -54,7 +54,8 @@ export class ProductService {
         category: categories.find(c => product.categoryId === c.id).name,
         searchKey: [product.productName]
       }) as Product)
-    )
+    ),
+    shareReplay(1) // Add it here instead of products$ so we don't need to re-executed the productWithCategory$ on every subscription
   );
 
   // Compared to categorySelectedSubject in product-list.component.ts. We defined the productSElectedSubject in service because both
@@ -78,7 +79,8 @@ export class ProductService {
       map(([products, selectedProductId]) =>
         products.find(product => product.id === selectedProductId)
       ),
-      tap(product => console.log('selectedProduct', product))
+      tap(product => console.log('selectedProduct', product)),
+      shareReplay(1)
     );
 
 
