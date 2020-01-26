@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import {of, throwError} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {concatMap, map, tap} from 'rxjs/operators';
 import {Supplier} from './supplier';
 import {log} from 'util';
 
@@ -17,17 +17,28 @@ export class SupplierService {
       map(id => this.http.get<Supplier>(`${this.suppliersUrl}/${id}`))
     );
 
+  supplierWithConcatMap$ = of(1, 5, 8)
+    .pipe(
+      tap(id => console.log('concatmap source Observable', id)),
+      concatMap(id => this.http.get<Supplier>(`${this.suppliersUrl}/${id}`))
+    );
+
+
   // constructor(private http: HttpClient) { }
   constructor(private http: HttpClient) {
-    this.supplierWithMap$
-      // // this will print observable because supplierWithMap$ is Observerable<Observable<Supplier>>
-      // .subscribe(
-      //   item => console.log('map result', item)
-      // );
-      // This will not work with async pipe. And also don't know how to unsubscribe.
-      .subscribe( o => o.subscribe(
-        item => console.log('map result', item)
-      ));
+    // this.supplierWithMap$
+    //   // // this will print observable because supplierWithMap$ is Observerable<Observable<Supplier>>
+    //   // .subscribe(
+    //   //   item => console.log('map result', item)
+    //   // );
+    //   // This will not work with async pipe. And also don't know how to unsubscribe.
+    //   .subscribe( o => o.subscribe(
+    //     item => console.log('map result', item)
+    //   ));
+
+    this.supplierWithConcatMap$.subscribe(
+      item => console.log('concatMap result', item)
+    );
   }
 
   private handleError(err: any) {
