@@ -47,10 +47,10 @@ export class SupplierService {
     //     item => console.log('map result', item)
     //   ));
 
-    this.supplierWithConcatMap$.subscribe(item => console.log('concatMap result', item));
-    this.supplierWithMergeMap$.subscribe(item => console.log('mergeMap result', item));
-    // You will only see one switchMap result. Because the last one (id:8) will cancel the previous two
-    this.supplierWithSwitchMap$.subscribe(item => console.log('switchMap result', item));
+    // this.supplierWithConcatMap$.subscribe(item => console.log('concatMap result', item));
+    // this.supplierWithMergeMap$.subscribe(item => console.log('mergeMap result', item));
+    // // You will only see one switchMap result. Because the last one (id:8) will cancel the previous two
+    // this.supplierWithSwitchMap$.subscribe(item => console.log('switchMap result', item));
   }
 
   private handleError(err: any) {
