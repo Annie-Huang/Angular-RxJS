@@ -15,6 +15,8 @@ https://rxjs-dev.firebaseapp.com/api/operators/withLatestFrom
 https://www.learnrxjs.io/learn-rxjs/operators/combination/withlatestfrom
 https://rxjs-dev.firebaseapp.com/api/operators/filter
 https://www.learnrxjs.io/learn-rxjs/operators/filtering/filter
+https://rxjs-dev.firebaseapp.com/api/operators/shareReplay
+https://www.learnrxjs.io/learn-rxjs/operators/multicasting/sharereplay
 
 
 In C:\react\Angular-RxJS\CodeBackupToLecture3RxJSOperator\
@@ -66,11 +68,23 @@ Where as forkJoin usually only use in http and http.
 Use suxfix Subject to represent Subject:          categorySelectedSubject
 Use suxfix Action$ to represent Action Stream:    categorySelectedAction$
 
+-----------------
+shareReplay(1)
+1 is the optional buffer size, which is the number of items cached and replayed. which means it will always send the last assigned value.
+Will it ever be another value rather than 1??
 
+In product-list.component.ts
+  products$ = combineLatest([
+    1. this.productService.productWithAdd$,  -->     1.1 this.productWithCategory$, -->     1.1.1. this.products$,
+                                                                                            1.1.2. this.productCategoryService.productCategories$  ***
+                                                     1.2 this.productInsertAction$
+    2. this.categorySelectedAction$
+  ])
+  categories$ = this.productCategoryService.productCategories$  ***
 
+Therefore we can add shareReplay(1) into productCategories$
 
-
-
+-----------------
 
 
 
