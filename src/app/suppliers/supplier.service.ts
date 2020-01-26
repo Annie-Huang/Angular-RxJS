@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { throwError } from 'rxjs';
+import {of, throwError} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {Supplier} from './supplier';
+import {log} from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +12,23 @@ import { throwError } from 'rxjs';
 export class SupplierService {
   suppliersUrl = 'api/suppliers';
 
-  constructor(private http: HttpClient) { }
+  supplierWithMap$ = of(1, 5, 8)
+    .pipe(
+      map(id => this.http.get<Supplier>(`${this.suppliersUrl}/${id}`))
+    );
+
+  // constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.supplierWithMap$
+      // // this will print observable because supplierWithMap$ is Observerable<Observable<Supplier>>
+      // .subscribe(
+      //   item => console.log('map result', item)
+      // );
+      // This will not work with async pipe. And also don't know how to unsubscribe.
+      .subscribe( o => o.subscribe(
+        item => console.log('map result', item)
+      ));
+  }
 
   private handleError(err: any) {
     // in a real world app, we may send the server to some remote logging infrastructure
