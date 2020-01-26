@@ -1,6 +1,6 @@
 import {Component, OnInit, OnDestroy, ChangeDetectionStrategy} from '@angular/core';
 
-import {EMPTY, Subscription} from 'rxjs';
+import {EMPTY, Subject, Subscription} from 'rxjs';
 
 import { Product } from '../product';
 import { ProductService } from '../product.service';
@@ -14,22 +14,32 @@ import {catchError} from 'rxjs/operators';
 // export class ProductListAltComponent implements OnInit, OnDestroy {
 export class ProductListAltComponent {
   pageTitle = 'Products';
-  // ChangeDetectionStrategy.OnPush will cause any change on errorMessage not to revaluate, because it's not an obserable.
-  errorMessage = '';
+
+  // // ChangeDetectionStrategy.OnPush will cause any change on errorMessage not to revaluate, because it's not an obserable.
+  // errorMessage = '';
+  private errorMessageSubject = new Subject<string>();
+  errorMessage$ = this.errorMessageSubject.asObservable();
+
   // selectedProductId;
 
   // products: Product[] = [];
   // sub: Subscription;
 
-  // products$ = this.productService.products$
+  // // products$ = this.productService.products$
+  // products$ = this.productService.productWithCategory$
+  //   .pipe(
+  //     catchError(err => {
+  //       this.errorMessage = err;
+  //       return EMPTY;
+  //     })
+  //   );
   products$ = this.productService.productWithCategory$
     .pipe(
       catchError(err => {
-        this.errorMessage = err;
+        this.errorMessageSubject.next(err);
         return EMPTY;
       })
     );
-
   selectedProduct$ = this.productService.selectedProduct$;
 
   constructor(private productService: ProductService) { }
