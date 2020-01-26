@@ -21,6 +21,8 @@ https://rxjs-dev.firebaseapp.com/api/operators/concatMap
 https://www.learnrxjs.io/learn-rxjs/operators/transformation/concatmap
 https://rxjs-dev.firebaseapp.com/api/operators/mergeMap
 https://www.learnrxjs.io/learn-rxjs/operators/transformation/mergemap
+https://rxjs-dev.firebaseapp.com/api/operators/switchMap
+https://www.learnrxjs.io/learn-rxjs/operators/transformation/switchmap
 
 
 In C:\react\Angular-RxJS\CodeBackupToLecture3RxJSOperator\
@@ -162,4 +164,13 @@ E.g. in our marble diagram: A1 can be return after A2.
 flatMap is an alias for mergeMap!
 If only one inner subscription should be active at a time, try switchMap!
 If the order of emission and subscription of inner observables is important, try concatMap!
+
+switchMap:
+Projects each source value to an Observable which is merged in the output Observable, emitting values only from the most recently projected Observable.
+Stops the prior inner Observable and switches to the new inner Observable
+
+
+
+
+
 
