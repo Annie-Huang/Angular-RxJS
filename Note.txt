@@ -29,6 +29,13 @@ In C:\react\Angular-RxJS\CodeBackupToLecture3RxJSOperator\
 the only change that is different from angular cli generated project is:
 C:\react\Angular-RxJS\src\app\app.component.ts
 
+
+Things I haven't done:
+In the last chapter, it suggest people use to vm$ to combined all the obversable before returning it to the html page.
+The sample that has been done is product-details. I haven' done any further.
+But it's said it's done within the APM-Final folder....
+
+
 Keywords used:
 -----------
 subscribe         RxJS Terms and Syntax
