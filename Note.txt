@@ -77,8 +77,6 @@ switchMap
 (none)            Combining All the Streams
 
 
-
-
 ======================================================
 
 
