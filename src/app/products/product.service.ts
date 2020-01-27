@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import {BehaviorSubject, combineLatest, from, merge, Observable, Subject, throwError} from 'rxjs';
-import {catchError, map, mergeMap, scan, shareReplay, tap, toArray} from 'rxjs/operators';
+import {catchError, filter, map, mergeMap, scan, shareReplay, tap, toArray} from 'rxjs/operators';
 
 import { Product } from './product';
 import { Supplier } from '../suppliers/supplier';
@@ -108,6 +108,7 @@ export class ProductService {
   // This returns a Observable<Supplier[]>
   selectedProductSuppliers$ = this.selectedProduct$
     .pipe(
+      filter(selectedProduct => Boolean(selectedProduct)),
       mergeMap(selectedProduct =>
         from(selectedProduct.supplierIds)
           .pipe(
