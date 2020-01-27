@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import {BehaviorSubject, combineLatest, merge, Observable, Subject, throwError} from 'rxjs';
-import {catchError, map, scan, shareReplay, tap} from 'rxjs/operators';
+import {BehaviorSubject, combineLatest, from, merge, Observable, Subject, throwError} from 'rxjs';
+import {catchError, map, mergeMap, scan, shareReplay, tap, toArray} from 'rxjs/operators';
 
 import { Product } from './product';
 import { Supplier } from '../suppliers/supplier';
@@ -95,15 +95,27 @@ export class ProductService {
       scan((acc: Product[], value: Product) => [...acc, value])
     );
 
+  // // This returns a Observable<Suppl      )ier[]>
+  // selectedProductSuppliers$ = combineLatest([
+  //   this.selectedProduct$,
+  //   this.supplierService.suppliers$
+  // ]).pipe(
+  //   map(([selectedProduct, suppliers]) =>
+  //     suppliers.filter(supplier => selectedProduct.supplierIds.includes(supplier.id))
+  //   )
+  // );
+
   // This returns a Observable<Supplier[]>
-  selectedProductSuppliers$ = combineLatest([
-    this.selectedProduct$,
-    this.supplierService.suppliers$
-  ]).pipe(
-    map(([selectedProduct, suppliers]) =>
-      suppliers.filter(supplier => selectedProduct.supplierIds.includes(supplier.id))
-    )
-  );
+  selectedProductSuppliers$ = this.selectedProduct$
+    .pipe(
+      mergeMap(selectedProduct =>
+        from(selectedProduct.supplierIds)
+          .pipe(
+            mergeMap(supplierId => this.http.get<Supplier>(`${this.suppliersUrl}/${supplierId}`)),
+            toArray()
+          )
+      )
+    );
 
 
   // constructor(private http: HttpClient,
