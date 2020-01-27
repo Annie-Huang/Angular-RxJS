@@ -1,8 +1,8 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 
 import { ProductService } from '../product.service';
-import {catchError, map} from 'rxjs/operators';
-import {EMPTY, Subject} from 'rxjs';
+import {catchError, filter, map} from 'rxjs/operators';
+import {combineLatest, EMPTY, Subject} from 'rxjs';
 import {Product} from '../product';
 
 @Component({
@@ -44,6 +44,22 @@ export class ProductDetailComponent {
         return EMPTY;
       })
     );
+
+  // The structure for vm$ is Observable<{product: Product; productSuppliers: Supplier[]; pageTitle: string}>
+  vm$ = combineLatest([
+    this.product$,
+    this.productSuppliers$,
+    this.pageTitle$
+  ])
+    .pipe(
+      // During distruction, all element has to be put into [], and this need to be inside a ().
+      // if you have filter([product] => Boolean(product)), you will get compile error
+      filter(([product]) => Boolean(product)),
+      map(([product, productSuppliers, pageTitle]) =>
+        ({product, productSuppliers, pageTitle})
+      )
+    );
+
 
   constructor(private productService: ProductService) { }
 
