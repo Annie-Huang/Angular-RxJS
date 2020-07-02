@@ -1,3 +1,4 @@
+Why Should You Care About RxJS Higher-order Mapping Operators? | Deborah Kurata | ng-conf: Hardwired (https://www.youtube.com/watch?v=ldRdjc-60PM&t=771s)
 https://app.pluralsight.com/library/courses/rxjs-angular-reactive-development/table-of-contents
 https://github.com/DeborahK/Angular-RxJS
 https://github.com/Annie-Huang/Angular-RxJS
@@ -156,13 +157,47 @@ Consider:
 Any Observable emit Observable is called Higher-order Observable
 
 
-concatMap:
+
+################
+## concatMap: ##
+################
 Projects each source value to an Observable which is merged in the output Observable, in a serialized fashion waiting for each one to complete before merging the next.
 It waits for each inner Observable to complete before processing the next one.
 Concatenates their results in sequence.
 
+Use concatMap when:
+- To wait for the prior Observable to complete before starting the next one.
+- To process items in sequence
+- Example:
+    - Form a set of ids, get data in sequence
+    - From a set of ids, update data in sequence
 
-mergeMap:
+
+concatmap starts just the same as mergemap did on the sbuscribe to the source stream it takes then the observable stream subscribess to that stream and creates an output stream.
+But concatmap unlike merge map when an item is emitted from the stream it philosophically queues it so the emitted item is queued up.
+Then when the item is processed off the queue at that point the item is mapped to the inner observable.
+It subscribes to that inner observable and another thing different about concatmap and merge map is that it waits so this code (inner) is going to just stop and wait
+till that response is returned then it's going to concatenate it to the output stream and unsubscribe.
+Only then does it take the next one off the queue so it's going to be processing them one at a time which is really good if you want to ensure that these
+are going to happen in sequence. So you want to use concatmap anytime you want to wait for one to finish before starting the next one, (i meant) the next inner observable.
+It will process those items in sequence so an couple of example on this one from a set of ID's get data in sequences or from a set of ID's update data you really
+consider using concatmap if you're doing any kids of updates, inserts or deletes because you may want them actually in order, say a user updates a product
+and then updates the same product at a second time, you want to ensure that they are both processed in the order that the user made the updates
+and concatmap will help you ensure that happens
+
+  product$ = this.productSelectedAction$
+    .pipe(
+      concatMap(selectedId =>
+        this.http.get<Product>(`${url}/${selectedId}`)
+          .pipe(
+            tap(response => console.log(response))
+          )
+    );
+
+
+###############
+## mergeMap: ##
+###############
 Projects each source value to an Observable which is merged in the output Observable.
 It executes inner Observables in parallel.
 E.g. in our marble diagram: A1 can be return after A2.
@@ -171,11 +206,62 @@ flatMap is an alias for mergeMap!
 If only one inner subscription should be active at a time, try switchMap!
 If the order of emission and subscription of inner observables is important, try concatMap!
 
-switchMap:
+Use mergeMap when:
+- To process items in parallet
+- When order doesn't matter
+- Examples: With a set of suppiler ids, get each supplier for a product (order doesn't matter)
+
+Use mergemap any time we want to process items in parallel, because what happens with merge map is this the user picks one and then takes a different one
+then picks a different one (pick product from a list of products), it's goign to execute those requests right away and process those items in parallel.
+Now because it's processing them in parallel and because it's all async you can't depend on the order of the returned results.
+Some examples of when to use mergemaps say you have a set of IDs and you want to get all of the suppliers for a product when order doesn't matter,
+it can send off the request for all of them all at the same time and get all of their values back.
+
+  product$ = this.productSelectedAction$
+    .pipe(
+      mergeMap(selectedId =>
+        this.http.get<Product>(`${url}/${selectedId}`)
+          .pipe(
+            tap(response => console.log(response))
+          )
+    );
+
+
+################
+## switchMap: ##
+################
 Projects each source value to an Observable which is merged in the output Observable, emitting values only from the most recently projected Observable.
 Stops the prior inner Observable and switches to the new inner Observable
 
+Use switchMap when:
+- To stop any prior Observable before switching to the next one.
+- To process the most recent item
+- Example
+  - Type ahead or auto completion
+  - User selection from a list
 
+
+Like other higher-order mapping operators it starts the same. Unbscribe to the source string so when we subscribe to product$ it subscribes to the
+product selected action. It takes in that obvervable stream that product selected action stream, subscribes to it and creates an output stream.
+So that process is the same for all of these operator. When an item is emitted from the source stream with switchmap, the item is mapped to an
+inner observable. But then what's different from switch map and the other two is that it unsubscribed from any prior inner observable.
+It then subscribes to the new entered observable it concatenates its emission and unsubscribe. So if the user picked 5 what's going to do is
+start to get 4 then it's going to see that 5 was emitted, it's going to throw away the 4 and the subscription for that, and go ahead and
+process that last selection that user made on with the ID of 5. So when would we use switch map to stop any prior observable before switching
+to the next one, to process basically the most recent item. For example type-ahead. So if the user types two letters you might go off and
+start searching for something as soon as they type the third you really don't care about the results from the first two characters now
+you want the results for the three. Another example is user selection from a list because if they can pick multiple ones and you only want
+ever their last selection to be process you want to use a switchmap
+
+
+  product$ = this.productSelectedAction$
+    .pipe(
+      switchmap(selectedId =>
+        this.http.get<Product>(`${url}/${selectedId}`)
+          .pipe(
+            tap(response => console.log(response))
+          )
+    );
 
 
 
